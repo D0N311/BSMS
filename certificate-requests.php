@@ -1,4 +1,7 @@
 <?php
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 include "bootstrap/index.php";
 
 use Carbon\Carbon;
@@ -99,7 +102,6 @@ $request_list = (function () use ($db) {
   </head>
 
   <body>
-    <?php include "templates/loading_screen.php"; ?>
     <div class="wrapper">
       <!-- Main Header -->
       <?php include "templates/main-header.php"; ?>
@@ -242,7 +244,7 @@ $request_list = (function () use ($db) {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form method="POST" action="model/certificate-request.php" enctype="multipart/form-data">
+              <form method="POST" action="model/certificate-request.php" id="certificate-request-form" enctype="multipart/form-data">
                 <div class="modal-body">
                   <div class="row">
                     <div class="col-md-12">
@@ -295,13 +297,13 @@ $request_list = (function () use ($db) {
                           <!--<input class="form-control" placeholder="Enter business name" name="business_nature" />-->
                           <select class="form-control" placeholder="Enter business name" name="business_nature" id="business_nature_select">
                           <option selected disabled>Select nature of business</option>
-                          <option>Manufacturing</option>
-                          <option>Trading</option>
-                          <option>Sevice</option>
-                          <option>Agriculture</option>
-                          <option>Mining and Extractive</option>
-                          <option>Technology and Innovation</option>
-                          <option>Financial and Real Estate</option>
+                          <option value="Manufacturing">Manufacturing</option>
+                          <option value="Trading">Trading</option>
+                          <option value="Service">Service</option>
+                          <option value="Agriculture">Agriculture</option>
+                          <option value="Mining and Extractive">Mining and Extractive</option>
+                          <option value="Technology and Innovation">Technology and Innovation</option>
+                          <option value="Financial and Real Estate">Financial and Real Estate</option>
                           <option>Others</option>
                         </select>
                         </div>
@@ -310,11 +312,18 @@ $request_list = (function () use ($db) {
                           <div class="col-md-12" id="other_business_nature_container" style="display: none;">
                               <div class="form-group">
                                   <label>Specify Nature of Business</label>
-                                  <input class="form-control" placeholder="Enter other nature of business" id="other_business_nature" name="business_nature" />
-                              </div>
+                                  <input  list="browsers" class="form-control" placeholder="Enter other nature of business" id="other_business_nature" name="business_nature" />
+                               <datalist id="browsers">
+                            <option value="Edge">
+                            <option value="Firefox">
+                            <option value="Chrome">
+                            <option value="Opera">
+                            <option value="Safari">
+                          </datalist>
+                                </div>
                           </div>
                     </div>
-
+                         
                     <div id="add_certificate_cutting_container">
                       <div class="col-md-12">
                         <div class="form-group">
@@ -575,6 +584,21 @@ $request_list = (function () use ($db) {
 });
 
     </script>
+    <script>
+document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting
+
+    var formData = new FormData(this); // Create a FormData object from the form
+
+    // Log each form field and its value to the console
+    formData.forEach(function(value, key) {
+        console.log(key + ': ' + value);
+    });
+
+    // Optionally, you can submit the form after logging the data
+    // this.submit();
+});
+</script>
   </body>
 
 </html>
